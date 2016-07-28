@@ -1,9 +1,6 @@
-import React = __React;
-import ReactDOM = __React.__DOM;
-
 interface Edge {
-    src: string;
-    dst: string;
+    src: State;
+    dst: State;
     prob: number;
 }
 
@@ -14,9 +11,9 @@ export class State {
         this.key = key;
         this.transition = [];
     }
-    addTransition(dst: string, prob: number) {
+    addTransition(dst: State, prob: number) {
         this.transition.push({
-            src: this.key,
+            src: this,
             dst: dst,
             prob: prob,
         })
@@ -30,7 +27,7 @@ export class State {
             this.transition[i].prob /= sum;
         }
     }
-    chooseNextState(randomNumber: number): string {
+    chooseNextState(randomNumber: number): State {
         this.normalize();
         const cumsum: number[] = [];
         let prev = 0.0;
@@ -50,8 +47,9 @@ export class State {
 class SamplePath {
     currentState: State;
     move() {
+        // [0, 1)
         const p = Math.random();
-
+        this.currentState = this.currentState.chooseNextState(p);
     }
 }
 

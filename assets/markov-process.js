@@ -6,7 +6,7 @@ var State = (function () {
     }
     State.prototype.addTransition = function (dst, prob) {
         this.transition.push({
-            src: this.key,
+            src: this,
             dst: dst,
             prob: prob
         });
@@ -42,7 +42,9 @@ var SamplePath = (function () {
     function SamplePath() {
     }
     SamplePath.prototype.move = function () {
+        // [0, 1)
         var p = Math.random();
+        this.currentState = this.currentState.chooseNextState(p);
     };
     return SamplePath;
 }());
