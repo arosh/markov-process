@@ -2,11 +2,13 @@
   "globalDependencies": {
     "d3": "registry:dt/d3#0.0.0+20160727131401",
     "empower": "registry:dt/empower#0.0.0+20160317120654",
-    "lodash": "registry:dt/lodash#3.10.0+20160720001309",
     "mocha": "registry:env/mocha#2.2.5+20160723033700",
     "power-assert": "registry:dt/power-assert#0.0.0+20160316155526",
     "power-assert-formatter": "registry:dt/power-assert-formatter#0.0.0+20160317120654",
     "react": "registry:dt/react#0.14.0+20160720060442",
     "react-dom": "registry:dt/react-dom#0.14.0+20160412154040"
+  },
+  "dependencies": {
+    "lodash": "registry:npm/lodash#4.0.0+20160723033700"
   }
 }

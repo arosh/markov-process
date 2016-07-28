@@ -1,3 +1,5 @@
+import * as _ from "lodash";
+
 interface Edge {
     src: State;
     dst: State;
@@ -16,7 +18,7 @@ export class State {
             src: this,
             dst: dst,
             prob: prob,
-        })
+        });
     }
     normalize() {
         let sum = 0;

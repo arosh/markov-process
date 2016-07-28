@@ -1,64 +1,74 @@
-"use strict";
-var State = (function () {
-    function State(key) {
-        this.key = key;
-        this.transition = [];
+(function (factory) {
+    if (typeof module === 'object' && typeof module.exports === 'object') {
+        var v = factory(require, exports); if (v !== undefined) module.exports = v;
     }
-    State.prototype.addTransition = function (dst, prob) {
-        this.transition.push({
-            src: this,
-            dst: dst,
-            prob: prob
-        });
-    };
-    State.prototype.normalize = function () {
-        var sum = 0;
-        for (var i = 0; i < this.transition.length; i++) {
-            sum += this.transition[i].prob;
+    else if (typeof define === 'function' && define.amd) {
+        define(["require", "exports", "lodash"], factory);
+    }
+})(function (require, exports) {
+    "use strict";
+    var _ = require("lodash");
+    var State = (function () {
+        function State(key) {
+            this.key = key;
+            this.transition = [];
         }
-        for (var i = 0; i < this.transition.length; i++) {
-            this.transition[i].prob /= sum;
-        }
-    };
-    State.prototype.chooseNextState = function (randomNumber) {
-        this.normalize();
-        var cumsum = [];
-        var prev = 0.0;
-        for (var i = 0; i < this.transition.length; i++) {
-            cumsum.push(prev + this.transition[i].prob);
-            prev = cumsum[cumsum.length - 1];
-        }
-        for (var i = 0; i < this.transition.length; i++) {
-            if (randomNumber < cumsum[i]) {
-                return this.transition[i].dst;
+        State.prototype.addTransition = function (dst, prob) {
+            this.transition.push({
+                src: this,
+                dst: dst,
+                prob: prob
+            });
+        };
+        State.prototype.normalize = function () {
+            var sum = 0;
+            for (var i = 0; i < this.transition.length; i++) {
+                sum += this.transition[i].prob;
             }
+            for (var i = 0; i < this.transition.length; i++) {
+                this.transition[i].prob /= sum;
+            }
+        };
+        State.prototype.chooseNextState = function (randomNumber) {
+            this.normalize();
+            var cumsum = [];
+            var prev = 0.0;
+            for (var i = 0; i < this.transition.length; i++) {
+                cumsum.push(prev + this.transition[i].prob);
+                prev = cumsum[cumsum.length - 1];
+            }
+            for (var i = 0; i < this.transition.length; i++) {
+                if (randomNumber < cumsum[i]) {
+                    return this.transition[i].dst;
+                }
+            }
+            return null;
+        };
+        return State;
+    }());
+    exports.State = State;
+    var SamplePath = (function () {
+        function SamplePath(initialState) {
+            this.currentState = initialState;
         }
-        return null;
-    };
-    return State;
-}());
-exports.State = State;
-var SamplePath = (function () {
-    function SamplePath(initialState) {
-        this.currentState = initialState;
-    }
-    SamplePath.prototype.move = function () {
-        // [0, 1)
-        var p = Math.random();
-        this.currentState = this.currentState.chooseNextState(p);
-    };
-    return SamplePath;
-}());
-var MarkovProcess = (function () {
-    function MarkovProcess(numSamples) {
-        this.numSamples = numSamples;
-    }
-    MarkovProcess.prototype.setInitialStateUniformly = function () {
-        this.samples = [];
-        for (var i = 0; i < this.numSamples; i++) {
-            this.samples.push(new SamplePath(_.sample(this.stateSet)));
+        SamplePath.prototype.move = function () {
+            // [0, 1)
+            var p = Math.random();
+            this.currentState = this.currentState.chooseNextState(p);
+        };
+        return SamplePath;
+    }());
+    var MarkovProcess = (function () {
+        function MarkovProcess(numSamples) {
+            this.numSamples = numSamples;
         }
-    };
-    return MarkovProcess;
-}());
-exports.MarkovProcess = MarkovProcess;
+        MarkovProcess.prototype.setInitialStateUniformly = function () {
+            this.samples = [];
+            for (var i = 0; i < this.numSamples; i++) {
+                this.samples.push(new SamplePath(_.sample(this.stateSet)));
+            }
+        };
+        return MarkovProcess;
+    }());
+    exports.MarkovProcess = MarkovProcess;
+});

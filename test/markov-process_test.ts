@@ -31,6 +31,6 @@ describe("MarkovProcess", () => {
         const numSamples = 8;
         const m = new MarkovProcess(numSamples);
         m.setInitialStateUniformly();
-        assert(numSamples + 1 === m.samples.length);
+        assert(numSamples === m.samples.length);
     });
-})
+});

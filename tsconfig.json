@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
+        "jsx": "react",
+        "module": "umd",
         "noImplicitAny": true,
-        "noImplicitReturns": true,
-        "jsx": "react"
+        "noImplicitReturns": true
     },
     "exclude": [
         "node_modules"
