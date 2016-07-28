@@ -46,6 +46,9 @@ export class State {
 
 class SamplePath {
     currentState: State;
+    constructor(initialState: State) {
+        this.currentState = initialState;
+    }
     move() {
         // [0, 1)
         const p = Math.random();
@@ -53,7 +56,17 @@ class SamplePath {
     }
 }
 
-class MarkovProcess {
-    stateSet: string[];
+export class MarkovProcess {
+    numSamples: number;
+    stateSet: State[];
     samples: SamplePath[];
+    constructor(numSamples: number) {
+        this.numSamples = numSamples;
+    }
+    setInitialStateUniformly() {
+        this.samples = [];
+        for (let i = 0; i < this.numSamples; i++) {
+            this.samples.push(new SamplePath(_.sample(this.stateSet)));
+        }
+    }
 }

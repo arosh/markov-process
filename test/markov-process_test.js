@@ -24,3 +24,11 @@ describe("State", function () {
         assert(s3 === s1.chooseNextState(1.0 - EPSILON));
     });
 });
+describe("MarkovProcess", function () {
+    it("#setInitialStateUniformly でnumSamples個の要素がセットされること", function () {
+        var numSamples = 8;
+        var m = new markov_process_1.MarkovProcess(numSamples);
+        m.setInitialStateUniformly();
+        assert(numSamples + 1 === m.samples.length);
+    });
+});

@@ -39,7 +39,8 @@ var State = (function () {
 }());
 exports.State = State;
 var SamplePath = (function () {
-    function SamplePath() {
+    function SamplePath(initialState) {
+        this.currentState = initialState;
     }
     SamplePath.prototype.move = function () {
         // [0, 1)
@@ -49,7 +50,15 @@ var SamplePath = (function () {
     return SamplePath;
 }());
 var MarkovProcess = (function () {
-    function MarkovProcess() {
+    function MarkovProcess(numSamples) {
+        this.numSamples = numSamples;
     }
+    MarkovProcess.prototype.setInitialStateUniformly = function () {
+        this.samples = [];
+        for (var i = 0; i < this.numSamples; i++) {
+            this.samples.push(new SamplePath(_.sample(this.stateSet)));
+        }
+    };
     return MarkovProcess;
 }());
+exports.MarkovProcess = MarkovProcess;

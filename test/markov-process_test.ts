@@ -1,5 +1,5 @@
 import * as assert from "power-assert";
-import {State} from "../assets/markov-process";
+import {State, MarkovProcess} from "../assets/markov-process";
 
 // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON
 const EPSILON = 2.2204460492503130808472633361816E-16;
@@ -25,3 +25,12 @@ describe("State", () => {
         assert(s3 === s1.chooseNextState(1.0 - EPSILON));
     });
 });
+
+describe("MarkovProcess", () => {
+    it("#setInitialStateUniformly でnumSamples個の要素がセットされること", () => {
+        const numSamples = 8;
+        const m = new MarkovProcess(numSamples);
+        m.setInitialStateUniformly();
+        assert(numSamples + 1 === m.samples.length);
+    });
+})
