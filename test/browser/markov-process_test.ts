@@ -1,5 +1,5 @@
 import * as assert from "power-assert";
-import {State, MarkovProcess} from "../../assets/markov-process";
+import {State, MarkovProcess} from "../../src/markov-process";
 
 // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON
 const EPSILON = 2.2204460492503130808472633361816E-16;
