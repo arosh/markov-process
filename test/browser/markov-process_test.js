@@ -3,12 +3,12 @@
         var v = factory(require, exports); if (v !== undefined) module.exports = v;
     }
     else if (typeof define === 'function' && define.amd) {
-        define(["require", "exports", "power-assert", "../assets/markov-process"], factory);
+        define(["require", "exports", "power-assert", "../../assets/markov-process"], factory);
     }
 })(function (require, exports) {
     "use strict";
     var assert = require("power-assert");
-    var markov_process_1 = require("../assets/markov-process");
+    var markov_process_1 = require("../../assets/markov-process");
     // https://developer.mozilla.org/ja/docs/Web/JavaScript/Reference/Global_Objects/Number/EPSILON
     var EPSILON = 2.2204460492503130808472633361816E-16;
     describe("State", function () {
